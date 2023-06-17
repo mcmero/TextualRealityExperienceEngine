@@ -20,4 +20,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestFiles\TestFile.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

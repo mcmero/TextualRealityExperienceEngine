@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine.Utilities;
 
@@ -194,6 +195,16 @@ namespace TextualRealityExperienceEngine.Tests.Unit.Utilities
             Assert.AreEqual(2, content.CountContentItems);
             Assert.IsFalse(content.Exists("not exist"));
             Assert.IsFalse(content.Exists("not exist 2"));
+        }
+
+        [TestMethod]
+        public void AddContentItemsFromFile()
+        {
+            var content = new ContentManagement();
+            content.AddContentItemsFromFile(Path.Combine("TestFiles", "TestFile.yaml"));
+            Assert.AreEqual(2, content.CountContentItems);
+            Assert.AreEqual("This is a test sentence", content.RetrieveContentItem("MyId"));
+            Assert.AreEqual("This is a test sentence that spans multiple\nlines", content.RetrieveContentItem("MyId2"));
         }
     }
 }

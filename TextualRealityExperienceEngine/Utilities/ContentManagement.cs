@@ -24,6 +24,8 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using YamlDotNet.Serialization;
 using TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine.Utilities
@@ -82,6 +84,44 @@ namespace TextualRealityExperienceEngine.GameEngine.Utilities
             else
             {
                 _content.Add(identifier, content);
+            }
+        }
+
+        /// <summary>
+        /// Add content items to the content management system from a YAML file.
+        /// </summary>
+        /// <param name="filePath">Path to the YAML file containing IDs and content.</param>
+        /// <exception cref="ArgumentNullException">If either the identifier or the text is null or empty, then an
+        /// ArgumentNullException is thrown. </exception>
+        /// <exception cref="FileNotFoundException">If the specified file cannot be found, a FileNotFoundException
+        /// is thrown.</exception>
+        public void AddContentItemsFromFile(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The file " + filePath + " does not exist.");
+            }
+
+            string yamlContent = File.ReadAllText(filePath);
+
+            var deserializer = new DeserializerBuilder().Build();
+            var yamlObject = deserializer.Deserialize<Dictionary<string, object>>(yamlContent);
+
+            foreach (var id in yamlObject.Keys)
+            {
+                if (TextCompressed)
+                {
+                    _content.Add(id, _compressor.Compress(yamlObject[id].ToString()));
+                }
+                else
+                {
+                    _content.Add(id, yamlObject[id].ToString());
+                }
             }
         }
 
