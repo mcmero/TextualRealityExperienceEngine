@@ -60,6 +60,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IDroppedObjects DroppedObjects { get; set; }
 
         /// <summary>
+        /// A list of characters present in the room.
+        /// </summary>
+        public Dictionary<string, Character> CharactersPresent { get; set; }
+
+        /// <summary>
         /// This flag indicates if the lights are on in the room. You can use this as a game play mechanic so metaphorically
         /// dim the lights.
         /// </summary>
@@ -93,6 +98,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Game = game;
             LightsOn = true;
             DroppedObjects = new DroppedObjects(Game);
+            CharactersPresent = new Dictionary<string, Character>();
         }
 
         /// <summary>
@@ -109,6 +115,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Game = game;
             LightsOn = true;
             DroppedObjects = new DroppedObjects(Game);
+            CharactersPresent = new Dictionary<string, Character>();
         }
 
         /// <summary>
@@ -136,6 +143,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Game = game;
             LightsOn = true;
             DroppedObjects = new DroppedObjects(Game);
+            CharactersPresent = new Dictionary<string, Character>();
         }
         
         /// <summary>
@@ -382,6 +390,14 @@ namespace TextualRealityExperienceEngine.GameEngine
                             foreach (var item in DroppedObjects.DroppedObjectsList)
                             {
                                 roomDescription += "\r\nThere is a " + item.Name + " on the floor.";
+                            }
+                        }
+
+                        if (CharactersPresent.Count > 0)
+                        {
+                            foreach (var characterEntry in CharactersPresent)
+                            {
+                                roomDescription += "\r\n\r\n" + characterEntry.Value.Name + " is present.";
                             }
                         }
 

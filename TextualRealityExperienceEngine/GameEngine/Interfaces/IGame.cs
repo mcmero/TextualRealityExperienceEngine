@@ -47,6 +47,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         bool HintSystemEnabled { get; set; }
         int HintCost { get; }
         IPlayer Player { get; set; }
+        Dictionary<string, Character> Characters { get; set; }
         DateTime GameClock { get; set; }
         ITextSubstitute TextSubstitute { get; }
 

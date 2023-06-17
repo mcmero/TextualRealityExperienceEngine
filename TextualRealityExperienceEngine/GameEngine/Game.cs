@@ -152,6 +152,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IPlayer Player { get; set; }
 
         /// <summary>
+        /// List of non-player characters in the game.
+        /// </summary>
+        public Dictionary<string, Character> Characters { get; set; }
+
+        /// <summary>
         /// It is possible to set a game clock so you can use the date and time as part of a game-play mechanic. This
         /// means if you collected an object for the inventory on Tuesday (in game time) and used a time machine to go back
         /// to last Saturday, then that object would not be in your inventory if you want it to observe game time.
@@ -194,6 +199,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
+            Characters = new Dictionary<string, Character>();
             TextSubstitute = new TextSubstitute();
         }
 
@@ -222,6 +228,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
+            Characters = new Dictionary<string, Character>();
             TextSubstitute = new TextSubstitute();
         }
                 

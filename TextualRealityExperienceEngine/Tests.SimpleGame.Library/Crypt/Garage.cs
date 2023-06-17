@@ -36,6 +36,7 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Crypt
 
             Name = game.ContentManagement.RetrieveContentItem("GarageName");
             Description = game.ContentManagement.RetrieveContentItem("GarageDescription");
+            CharactersPresent.Add("arthur", game.Characters["arthur"]);
         }
 
         public override string ProcessCommand(ICommand command)

@@ -72,10 +72,20 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
             Game.HelpText = Game.ContentManagement.RetrieveContentItem("HelpText");
             Game.HintSystemEnabled = true;
 
+            SetupCharacters();
             SetupRooms();
 
             Game.StartRoom = Outside;
             Game.CurrentRoom = Outside;
+        }
+
+        private void SetupCharacters()
+        {
+            Character Arthur = new Character("Arthur", "Valiant Knight", GenderIdentityEnum.Male);
+            Game.Characters.Add("arthur", Arthur);
+            Game.Parser.Nouns.Add("arthur", "arthur");
+            Game.Parser.Nouns.Add("knight", "arthur");
+            Game.Parser.Nouns.Add("king", "arthur");
         }
 
         private void SetupRooms()
@@ -104,7 +114,7 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
             var doorwayToGarage = new DoorWay
             {
                 Direction = Direction.NorthWest,
-                Locked = true,
+                Locked = false,
             };
 
             Outside.AddExit(doorway, Hallway);
