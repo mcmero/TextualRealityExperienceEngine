@@ -133,6 +133,7 @@ namespace TextualRealityExperienceEngine.GameEngine.TextProcessing
                     case ParserStatesEnum.Verb:
                         var verb = ProcessVerbs(word, ParserStatesEnum.Noun);
 
+                        if (verb == VerbCodes.Talk) { _parserStates = ParserStatesEnum.Preposition; }
                         if (verb == VerbCodes.NoCommand) { continue; }
 
                         _command.Verb = verb;

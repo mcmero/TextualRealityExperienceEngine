@@ -482,6 +482,66 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
+        public void IsCharacterAvailableThrowsNullArgumentException()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            room.CharactersPresent.Add("test", new Character("test"));
+
+            room.IsCharacterAvailable(String.Empty);
+        }
+
+        [TestMethod]
+        public void IsCharacterAvailableCharacterNotPresent()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            room.CharactersPresent.Add("test", new Character("test"));
+
+            Assert.IsFalse(room.IsCharacterAvailable("foobar"));
+        }
+
+        [TestMethod]
+        public void IsCharacterAvailableNoSuchCharacter()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            room.CharactersPresent.Add("test", null);
+
+            Assert.IsFalse(room.IsCharacterAvailable("test"));
+        }
+
+        [TestMethod]
+        public void IsCharacterAvailableCharacterIsBusy()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            var character = new Character("test");
+            character.IsBusy = true;
+            room.CharactersPresent.Add("test", character);
+
+
+            Assert.IsFalse(room.IsCharacterAvailable("test"));
+        }
+
+        [TestMethod]
+        public void IsCharacterAvailable()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            var character = new Character("test");
+            room.CharactersPresent.Add("test", character);
+
+            Assert.IsTrue(room.IsCharacterAvailable("test"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ProcessCommandThrowsArgumentNullExceptionIfCommandIsNull()
         {
             IGame game = new Game();

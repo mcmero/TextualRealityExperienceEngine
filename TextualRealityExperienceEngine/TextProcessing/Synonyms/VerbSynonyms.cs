@@ -158,6 +158,12 @@ namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
             Add("munch", VerbCodes.Eat);
             Add("gulp", VerbCodes.Eat);
             Add("swallow", VerbCodes.Eat);
+
+            Add("talk", VerbCodes.Talk);
+            Add("speak", VerbCodes.Talk);
+            Add("converse", VerbCodes.Talk);
+            Add("chat", VerbCodes.Talk);
+            Add("discuss", VerbCodes.Talk);
         }
 
         /// <summary>

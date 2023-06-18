@@ -1,0 +1,24 @@
+﻿- id: 1
+  speaker: Arthur
+  text: My Liege.
+  choices:
+    - id: 1
+      text: Who are you?
+      next: 2
+    - id: 2
+      text: What are you doing here?
+      next: 3
+- id: 2
+  speaker: Arthur
+  text: King Arthur, pleased to make your acquaintance.
+  choices:
+    - id: 1
+      text: Say nothing
+      next: 0
+- id: 3
+  speaker: Arthur
+  text: Cleaning your garage, of course. Can't you see how filthy it is?
+  choices:
+    - id: 1
+      text: Say nothing
+      next: 0

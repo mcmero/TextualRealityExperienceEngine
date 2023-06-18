@@ -28,6 +28,8 @@ using TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs;
 using TextualRealityExperienceEngine.Tests.SimpleGame.Library.UpStairs;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using System.IO;
+using System.Xml.Linq;
 
 namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
 {
@@ -62,6 +64,12 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
             }
         }
 
+        public IScene CurrentScene
+        {
+            get { return Game.CurrentScene; }
+            set { Game.CurrentScene = value; }
+        }
+
         public void InitializeGame()
         {
             Game = new Game();
@@ -73,19 +81,11 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
             Game.HintSystemEnabled = true;
 
             SetupCharacters();
+            SetupScenes();
             SetupRooms();
 
             Game.StartRoom = Outside;
             Game.CurrentRoom = Outside;
-        }
-
-        private void SetupCharacters()
-        {
-            Character Arthur = new Character("Arthur", "Valiant Knight", GenderIdentityEnum.Male);
-            Game.Characters.Add("arthur", Arthur);
-            Game.Parser.Nouns.Add("arthur", "arthur");
-            Game.Parser.Nouns.Add("knight", "arthur");
-            Game.Parser.Nouns.Add("king", "arthur");
         }
 
         private void SetupRooms()
@@ -127,6 +127,20 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
             UpstairsHallway.AddExit(Direction.North, Bathroom);
 
             Kitchen.AddExit(Direction.East, DiningRoom);
+        }
+
+        private void SetupCharacters()
+        {
+            Character Arthur = new Character("Arthur", "Valiant Knight", GenderIdentityEnum.Male);
+            Game.Characters.Add("arthur", Arthur);
+            Game.Parser.Nouns.Add("arthur", "arthur");
+            Game.Parser.Nouns.Add("knight", "arthur");
+            Game.Parser.Nouns.Add("king", "arthur");
+        }
+
+        private void SetupScenes()
+        {
+            Game.AddScene(Path.Combine("Scenes", "Arthur.yaml"));
         }
 
         private void AddContentItems()

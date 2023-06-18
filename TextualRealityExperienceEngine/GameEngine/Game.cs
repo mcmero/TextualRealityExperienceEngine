@@ -24,7 +24,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
+using System.IO;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
@@ -87,6 +87,16 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IRoom CurrentRoom { get; set; }
 
         /// <summary>
+        /// Dictionary of scenes
+        /// </summary>
+        public Dictionary<string, IScene> Scenes { get; set; }
+
+        /// <summary>
+        /// The current scene that is being played.
+        /// </summary>
+        public IScene CurrentScene { get; set; }
+
+        /// <summary>
         /// Gets or sets the visited rooms.
         /// </summary>
         /// <value>The visited rooms.</value>
@@ -139,7 +149,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// The content management systems works as a key value pair store for you to store text.
         /// </summary>
         public IContentManagement ContentManagement { get; }
-        
+
         /// <summary>
         /// If you want your player to be able to request hints for the game, then set this flag to True.
         /// </summary>
@@ -201,6 +211,8 @@ namespace TextualRealityExperienceEngine.GameEngine
             Player = new Player();
             Characters = new Dictionary<string, Character>();
             TextSubstitute = new TextSubstitute();
+            Scenes = new Dictionary<string, IScene>();
+            CurrentScene = null;
         }
 
         /// <summary>
@@ -230,8 +242,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             Player = new Player();
             Characters = new Dictionary<string, Character>();
             TextSubstitute = new TextSubstitute();
+            Scenes = new Dictionary<string, IScene>();
+            CurrentScene = null;
         }
-                
+
         /// <summary>
         /// You have several options when it comes to offering hints to the player. You could maintain your own counter
         /// and allow the player 5 hints, for example, or you could deduct from their score and use the score as a hint
@@ -285,6 +299,32 @@ namespace TextualRealityExperienceEngine.GameEngine
             reply.Reply = string.Empty;
             
             return reply;
+        }
+
+        /// <summary>
+        /// Convenience method for adding a scene to the game.
+        /// Scene name is taken from the file name.
+        /// </summary>
+        /// <param name="sceneFile">Scene file path.</param>
+        public void AddScene(string sceneFile)
+        {
+            var scene = new Scene(sceneFile);
+            var sceneName = Path.GetFileNameWithoutExtension(sceneFile);
+            Scenes.Add(sceneName, scene);
+        }
+
+        /// <summary>
+        /// Select scene and set it to playing.
+        /// </summary>
+        /// <param name="command"></param>
+        public void PlayScene(string sceneName)
+        {
+            if (!Scenes.ContainsKey(sceneName))
+            {
+                throw new ArgumentException($"The scene {sceneName} does not exist.");
+            }
+            CurrentScene = Scenes[sceneName];
+            CurrentScene.IsPlaying = true;
         }
 
         private GameReply RunParser(string command)

@@ -37,6 +37,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string HelpText { get; set; }
         IRoom StartRoom { get; set; }
         IRoom CurrentRoom { get; set; }
+        IScene CurrentScene { get; set; }
+        Dictionary<string, IScene> Scenes { get; set; }
         IVisitedRooms VisitedRooms { get; set; }
 
         DifficultyEnum Difficulty { get; set; }       
@@ -54,6 +56,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         void IncreaseScore(int increaseBy);
         void DecreaseScore(int decreaseBy);
         GameReply ProcessCommand(string command);
+        void AddScene(string sceneFile);
+        void PlayScene(string sceneName);
         IContentManagement ContentManagement { get; }
         ReadOnlyCollection<ICommand> SaveGame();
         void LoadGame(ReadOnlyCollection<ICommand> commands);

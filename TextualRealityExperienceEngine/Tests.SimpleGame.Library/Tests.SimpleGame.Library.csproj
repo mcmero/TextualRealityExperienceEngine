@@ -19,4 +19,9 @@
     <Folder Include="Upstairs\" />
     <Folder Include="Downstairs\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Scenes\Arthur.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -342,6 +342,34 @@ namespace TextualRealityExperienceEngine.GameEngine
         }
 
         /// <summary>
+        /// Talk to a character in the room.
+        /// </summary>
+        /// <returns>True if the character is present and not busy.</returns>
+        /// <param name="characterKey">Character's key name</param>
+        /// <exception cref="ArgumentNullException">No character name given.</exception>
+        public bool IsCharacterAvailable(string characterKey)
+        {
+            if (string.IsNullOrEmpty(characterKey))
+            {
+                throw new ArgumentNullException(nameof(characterKey));
+            }
+            if (!CharactersPresent.ContainsKey(characterKey))
+            {
+                return false;
+            }
+            var character = CharactersPresent[characterKey];
+            if (character == null)
+            {
+                return false;
+            }
+            if (character.IsBusy)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// The ProcessCommand method is called by the main game once the parser has run. This method will handle the following
         /// functions:
         ///   - Navigation between rooms.
@@ -537,6 +565,26 @@ namespace TextualRealityExperienceEngine.GameEngine
                     }
 
                     return "I'm not hungry.";
+
+                case VerbCodes.Talk:
+                    if (CharactersPresent.Count ==0)
+                    {
+                        return "There is no one to talk to.";
+                    }
+                    if (string.IsNullOrEmpty(command.Noun2))
+                    {
+                        return "There is no character by this name.";
+                    }
+                    if (!CharactersPresent.ContainsKey(command.Noun2))
+                    {
+                        return command.Noun2 + " is not in the room.";
+                    }
+                    else if (CharactersPresent[command.Noun2].IsBusy)
+                    {
+                        var character = CharactersPresent[command.Noun2];
+                        return character.Name + " is busy right now.";
+                    }
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException();

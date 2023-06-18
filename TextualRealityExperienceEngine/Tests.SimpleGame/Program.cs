@@ -44,6 +44,36 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame
 
             while (true)
             {
+                // this loop handles the dialogue system
+                while (simpleGame.CurrentScene != null && simpleGame.CurrentScene.IsPlaying)
+                {
+                    string dialogueLine = simpleGame.CurrentScene.GetTextForCurrentDialogueNode();
+                    Console.WriteLine();
+                    ConsoleEx.WordWrap(dialogueLine);
+
+                    var validChoices = simpleGame.CurrentScene.GetValidChoicesForCurrentDialogueNode();
+                    foreach (var (displayId, choice) in validChoices)
+                    {
+                        ConsoleEx.WordWrap(displayId + ". " + choice.Text);
+                    }
+
+                    bool validResponse;
+                    do
+                    {
+                        if (validChoices.Count == 0)
+                        {
+                            Console.ReadKey();
+                            validResponse = simpleGame.CurrentScene.ProcessDialogueChoice(validChoices, "");
+                        }
+                        else
+                        {
+                            Console.Write("> ");
+                            var dialogueReply = Console.ReadLine();
+                            validResponse = simpleGame.CurrentScene.ProcessDialogueChoice(validChoices, dialogueReply);
+                        }
+                    } while (!validResponse);
+                }
+
                 Console.Write("> ");
                 var reply = simpleGame.ProcessCommand(Console.ReadLine());
 

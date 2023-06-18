@@ -39,6 +39,7 @@ namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
         Hint = 6,
         Attack = 7,
         Visit = 8,
-        Eat = 9
+        Eat = 9,
+        Talk = 10
     }
 }

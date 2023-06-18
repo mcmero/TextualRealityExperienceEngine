@@ -24,6 +24,7 @@ SOFTWARE.
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
 namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Crypt
 {
@@ -41,6 +42,19 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Crypt
 
         public override string ProcessCommand(ICommand command)
         {
+
+            if (command.Verb == VerbCodes.Talk)
+            {
+                if (IsCharacterAvailable(command.Noun2))
+                {
+                    if (command.Noun2 == "arthur")
+                    {
+                        Game.PlayScene("Arthur");
+                    }
+
+                }
+            }
+
             return command.ProfanityDetected ? Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude") : base.ProcessCommand(command);
         }
     }
