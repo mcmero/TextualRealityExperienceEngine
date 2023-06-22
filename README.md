@@ -20,3 +20,4 @@ Some of the features of Textual Reality include:
 - Save / load game system.
 - Inventory system for collection objects in the game.
 - Ability to drop any collected objects into any room.
+- Ability to talk to characters in a room via a dialogue-tree system.
