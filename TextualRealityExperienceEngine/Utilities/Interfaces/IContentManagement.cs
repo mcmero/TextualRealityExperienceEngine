@@ -27,6 +27,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces
     public interface IContentManagement
     {
         void AddContentItem(string identifier, string content);
+        void AddContentItemsFromFile(string filePath);
         string RetrieveContentItem(string identifier);
         int CountContentItems { get; }
         bool Exists(string identifier);
